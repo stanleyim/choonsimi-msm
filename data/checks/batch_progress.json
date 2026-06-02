@@ -3,15 +3,16 @@
     0,
     1,
     2,
-    3
+    3,
+    4
   ],
   "total_batches": 6,
   "last_batch": {
-    "num": 3,
-    "ohlcv_codes": 48,
-    "flow_codes": 48,
+    "num": 4,
+    "ohlcv_codes": 50,
+    "flow_codes": 49,
     "fail_ohlcv": 0,
     "fail_flow": 0,
-    "at": "2026-06-02T07:44:13.365836"
+    "at": "2026-06-02T07:53:51.092961"
   }
 }
