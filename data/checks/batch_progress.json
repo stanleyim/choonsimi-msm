@@ -1,0 +1,14 @@
+{
+  "completed_batches": [
+    0
+  ],
+  "total_batches": 6,
+  "last_batch": {
+    "num": 0,
+    "ohlcv_codes": 50,
+    "flow_codes": 50,
+    "fail_ohlcv": 0,
+    "fail_flow": 0,
+    "at": "2026-06-02T07:13:29.075548"
+  }
+}
