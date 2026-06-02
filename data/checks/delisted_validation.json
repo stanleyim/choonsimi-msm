@@ -1,0 +1,39 @@
+﻿{
+  "target_count": 291,
+  "ohlcv": {
+    "total_rows": 313116,
+    "unique_codes": 289,
+    "fail_codes": [
+      "104110",
+      "104120"
+    ],
+    "duplicates": 0,
+    "date_min": "2017-01-02",
+    "date_max": "2026-05-07"
+  },
+  "flow": {
+    "total_rows": 247395,
+    "unique_codes": 284,
+    "fail_codes": [
+      "029960",
+      "037620",
+      "068870",
+      "068875",
+      "104110",
+      "104120",
+      "139200"
+    ],
+    "duplicates": 0,
+    "columns": [
+      "date",
+      "기관합계",
+      "기타법인",
+      "개인",
+      "외국인합계",
+      "전체",
+      "code"
+    ],
+    "date_min": "2017-01-02",
+    "date_max": "2026-05-07"
+  }
+}
