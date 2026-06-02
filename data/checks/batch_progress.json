@@ -1,15 +1,16 @@
 {
   "completed_batches": [
     0,
-    1
+    1,
+    2
   ],
   "total_batches": 6,
   "last_batch": {
-    "num": 1,
+    "num": 2,
     "ohlcv_codes": 50,
     "flow_codes": 48,
     "fail_ohlcv": 0,
     "fail_flow": 0,
-    "at": "2026-06-02T07:26:13.422787"
+    "at": "2026-06-02T07:35:41.730895"
   }
 }
