@@ -1,0 +1,9 @@
+{
+  "sharpe_target": 0.686,
+  "mdd_target": -33.13,
+  "cagr_target": 16.48,
+  "in_sample_last": "2026-06-02",
+  "lock_date": "2026-06-05",
+  "lock_commit": "559a65e",
+  "config": "H=15 LONG + T4 (-20/0.5x/-10)"
+}
