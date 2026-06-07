@@ -1,21 +1,24 @@
 {
-  "schema_version": "realized_log_v1.1",
+  "schema_version": "realized_log_v1.2",
   "created_at": "2026-06-07",
-  "supersedes": "realized_log_v1",
-  "purpose": "OOS-IS 분리 + axis lag_gap 분리 + v12 raw / M8/M2/M6 filter variant 병렬 추적",
+  "supersedes": [
+    "realized_log_v1",
+    "realized_log_v1.1"
+  ],
+  "purpose": "OOS-IS 분리 + axis lag tracking + TAKEN/REJECTED 분리 기록. REJECTED row 보존으로 P(no-trade|filter) 추정 가능, edge unbiased.",
   "primary_key": "log_id",
   "columns": {
     "log_id": {
       "dtype": "str",
-      "desc": "uuid: {entry_date}_{code}_{signal_source}"
+      "desc": "{entry_date}_{code}_{signal_source}"
     },
     "entry_date": {
       "dtype": "date",
-      "desc": "T+0 entry"
+      "desc": "T+0 entry 의도일"
     },
     "exit_date": {
       "dtype": "date",
-      "desc": "nullable; hold 중 NaN"
+      "desc": "nullable; OPEN/SKIPPED 시 NaT"
     },
     "code": {
       "dtype": "str",
@@ -29,9 +32,13 @@
       "dtype": "str",
       "desc": "v12_RAW / v12+M8 / v12+M2 / v12+M6 / v12+M8M2M6"
     },
+    "signal_status": {
+      "dtype": "str",
+      "desc": "TAKEN / REJECTED_BY_FILTER"
+    },
     "is_pollution_risk": {
       "dtype": "bool",
-      "desc": "True if signal_source uses M2/M8/M6 (IS sweep_C 출처)"
+      "desc": "True if signal_source uses M2/M8/M6"
     },
     "is_oos": {
       "dtype": "bool",
@@ -39,23 +46,23 @@
     },
     "entry_px": {
       "dtype": "float",
-      "desc": "entry day close"
+      "desc": "entry close; REJECTED 시 NaN"
     },
     "mtm_px": {
       "dtype": "float",
-      "desc": "current mark price"
+      "desc": "current mark; REJECTED 시 NaN"
     },
     "mtm_date": {
       "dtype": "date",
-      "desc": "latest mark date"
+      "desc": "latest mark date; REJECTED 시 NaT"
     },
     "gross_ret_mtm": {
       "dtype": "float",
-      "desc": "(mtm_px/entry_px)-1"
+      "desc": "(mtm/entry)-1; REJECTED=0.0 (cash)"
     },
     "entry_cost": {
       "dtype": "float",
-      "desc": "0.0015"
+      "desc": "0.0015 if TAKEN else 0.0"
     },
     "exit_cost": {
       "dtype": "float",
@@ -63,15 +70,15 @@
     },
     "net_ret_mtm": {
       "dtype": "float",
-      "desc": "gross - entry_cost - exit_cost"
+      "desc": "gross - costs; REJECTED=0.0"
     },
     "weight": {
       "dtype": "float",
-      "desc": "1/10 = 0.10"
+      "desc": "0.10 if TAKEN else 0.0"
     },
     "hold_days_elapsed": {
       "dtype": "int",
-      "desc": "biz days entry→mtm"
+      "desc": "biz days entry→mtm; REJECTED=0"
     },
     "hold_days_target": {
       "dtype": "int",
@@ -79,11 +86,11 @@
     },
     "status": {
       "dtype": "str",
-      "desc": "OPEN / CLOSED"
+      "desc": "OPEN / CLOSED / SKIPPED"
     },
     "regime_at_entry": {
       "dtype": "str",
-      "desc": "v12 regime label (raw 불가 NaN 가능)"
+      "desc": "v12 regime label (raw 미가용 시 NaN)"
     },
     "axis_M8": {
       "dtype": "float",
@@ -99,11 +106,11 @@
     },
     "axis_ref_date": {
       "dtype": "date",
-      "desc": "axis 실제 참조 date (의도: entry_date-1bd; 실제: 그 이하 fallback)"
+      "desc": "axis 실제 참조일"
     },
     "axis_lag_bd": {
       "dtype": "int",
-      "desc": "entry_date - axis_ref_date in biz days (의도 1, 실제 ≥1)"
+      "desc": "entry_date - axis_ref_date in biz days"
     },
     "filter_M8_pass": {
       "dtype": "bool",
@@ -122,8 +129,24 @@
       "desc": "free text"
     }
   },
+  "rejected_rule": {
+    "description": "REJECTED_BY_FILTER row는 entry 자체가 발생 안 한 cash state. P(no-trade|filter) 추정 + edge unbiased 보장.",
+    "trigger": "signal_source has filter AND filter_pass=False",
+    "field_overrides": {
+      "entry_px": "NaN",
+      "mtm_px": "NaN",
+      "mtm_date": "NaT",
+      "gross_ret_mtm": 0.0,
+      "entry_cost": 0.0,
+      "exit_cost": 0.0,
+      "net_ret_mtm": 0.0,
+      "weight": 0.0,
+      "hold_days_elapsed": 0,
+      "status": "SKIPPED"
+    },
+    "metric_aggregation_rule": "variant별 portfolio return = mean(net_ret_mtm) over n=10 always. REJECTED=0이 cash 보유와 같은 기여 = 정확."
+  },
   "pollution_rule": {
-    "description": "M2/M8/M6 axis는 in-sample sweep_C 결과 기반 선택. OOS 자위 방지 위해 분리 추적.",
     "is_pollution_risk_true_when": [
       "v12+M8",
       "v12+M2",
@@ -133,11 +156,10 @@
     "is_pollution_risk_false_when": [
       "v12_RAW"
     ],
-    "true_oos_metric_eligibility": "is_oos==True AND signal_source=='v12_RAW' 만 진짜 OOS 통계로 사용"
+    "true_oos_metric_eligibility": "is_oos==True AND signal_source=='v12_RAW'"
   },
   "lag_rule": {
-    "description": "axis_lag_bd > 1 = T-1 의도와 실데이터 불일치. axis_v3 cutoff로 인한 forced fallback.",
     "ideal_lag_bd": 1,
-    "current_known_issue": "axis_v3 cutoff = 2026-06-02 → 6/4 entry의 T-1(6/3) 데이터 없음 → T-2(6/2) 사용"
+    "current_known_issue": "axis_v3 cutoff lag → axis_lag_bd>1 시 신뢰도 1단계 약화"
   }
 }
