@@ -115,6 +115,30 @@ def extract_flow(date, df_excl, df_incl, df_kq):
     return out
 
 
+def extract_basis_front(rows, prod_nm):
+    """B': front-month basis (deterministic, vol-independent).
+    Selection rule: min(yyyymm) over PROD_NM==prod_nm AND MKT_NM=='정규' AND not SP.
+    Legacy alignment: web/vkospi_basis_94y.parquet (single row/date).
+    NaN if cls or spot missing."""
+    import re as _re
+    cands = []
+    for r in (rows or []):
+        if r.get("PROD_NM") != prod_nm: continue
+        if r.get("MKT_NM") != "정규": continue
+        isu = r.get("ISU_NM") or ""
+        if "SP" in isu: continue
+        m = _re.search(r"F\s*(\d{6})", isu)
+        if not m: continue
+        cands.append((r, int(m.group(1))))
+    if not cands:
+        return float("nan")
+    nearest, _ = min(cands, key=lambda x: x[1])
+    cls, spot = _f(nearest.get("TDD_CLSPRC")), _f(nearest.get("SPOT_PRC"))
+    if np.isnan(cls) or np.isnan(spot):
+        return float("nan")
+    return cls - spot
+
+
 def build_axis_row(date, df_excl, df_incl, df_kq, auth_key, sleep=0.2):
     basDd = date.strftime("%Y%m%d")
     r_drvprod = fetch_krx(ENDPOINTS["drvprod"], basDd, auth_key)
@@ -132,7 +156,7 @@ def build_axis_row(date, df_excl, df_incl, df_kq, auth_key, sleep=0.2):
     m3, m4 = extract_m3_m4(r_bon)
     m15 = extract_basis(r_fut, "코스피200 선물")
     m16 = extract_basis(r_fut, "코스닥150 선물")
-    m17 = extract_basis(r_fut, "변동성지수 선물")
+    m17 = extract_basis_front(r_fut, "변동성지수 선물")
     m18 = extract_pcr(r_opt, "코스피200 옵션")
     m19 = extract_pcr(r_opt, "코스닥150 옵션")
     flow = extract_flow(date, df_excl, df_incl, df_kq)
