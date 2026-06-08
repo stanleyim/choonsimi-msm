@@ -1,0 +1,27 @@
+{
+  "version": "v4_STEP4",
+  "base_regime": "regime_v4_step2_v21.parquet",
+  "return_source": "data/raw/index/kospi_kq150_94y.parquet",
+  "alignment": "close→close, t+1",
+  "hold_map": {
+    "0": 5,
+    "1": 6,
+    "2": 3,
+    "3": 1
+  },
+  "merged_shape": [
+    2309,
+    29
+  ],
+  "omega_atomic_kospi": [],
+  "omega_atomic_kq150": [
+    3
+  ],
+  "omega_hold_kospi": [
+    1,
+    2
+  ],
+  "omega_pair_kospi": [],
+  "bonferroni_strict_threshold": 2.73,
+  "created_ts": 1780957477.1273127
+}
