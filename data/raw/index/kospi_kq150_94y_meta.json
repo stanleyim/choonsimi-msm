@@ -1,0 +1,34 @@
+{
+  "source": "pykrx",
+  "pykrx_codes": {
+    "KOSPI": "1001",
+    "KOSDAQ150": "2203 or 2003"
+  },
+  "range": [
+    "20170102",
+    "20260605"
+  ],
+  "shape": [
+    2309,
+    5
+  ],
+  "columns": [
+    "date",
+    "kospi_close",
+    "kq150_close",
+    "r_kospi_1d",
+    "r_kq150_1d"
+  ],
+  "return_def": "close→close, t+1 (pct_change().shift(-1))",
+  "axis_alignment": {
+    "axis_dates": 2309,
+    "idx_dates": 2309,
+    "axis_only": 0,
+    "idx_only": 0
+  },
+  "kospi_annual_pct": 17.42951147489712,
+  "kq150_annual_pct": 11.541661044028068,
+  "kospi_sharpe": 0.8289600162940355,
+  "kq150_sharpe": 0.38191474744471704,
+  "created_ts": 1780957393.898653
+}
