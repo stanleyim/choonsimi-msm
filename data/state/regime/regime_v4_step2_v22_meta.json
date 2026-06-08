@@ -1,0 +1,75 @@
+{
+  "version": "v4_STEP2_v22",
+  "method": "KMeans",
+  "k": 4,
+  "random_state": 42,
+  "n_init": 10,
+  "inertia": 23751.529099002495,
+  "silhouette": 0.6122227572044887,
+  "features": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M16",
+    "M17",
+    "M19",
+    "M17_missing",
+    "M19_missing",
+    "M16_expiry_flag"
+  ],
+  "features_dropped": [
+    "M5",
+    "M6",
+    "M7",
+    "M8",
+    "M9",
+    "M10",
+    "M11",
+    "M18"
+  ],
+  "transform": {
+    "log_sign": [
+      "M16"
+    ]
+  },
+  "nan_handling": "median_fill",
+  "medians": {
+    "M1": 17.59,
+    "M2": -0.24,
+    "M3": 2.313,
+    "M4": 5.402,
+    "M16": -2.730000000000018,
+    "M17": 0.04999999999999716,
+    "M19": 0.9687581699346406
+  },
+  "scaling": "RobustScaler",
+  "base_axis_file": "data/state/axis_raw/axis_raw_v20.parquet",
+  "base_head": "4a14ac0",
+  "cluster_sizes": {
+    "0": 93,
+    "1": 4,
+    "2": 2153,
+    "3": 59
+  },
+  "cluster_pct": {
+    "0": 0.0403,
+    "1": 0.0017,
+    "2": 0.9324,
+    "3": 0.0256
+  },
+  "run_length_mean": 11.318627450980392,
+  "run_length_median": 2.0,
+  "transition_diag_mean": 0.4355,
+  "judgment": {
+    "size_pass": false,
+    "diag_pass": false,
+    "run_length_pass": true,
+    "step3_entry": false
+  },
+  "created_ts": 1780956754.01133,
+  "previous_attempts": [
+    "regime_v4_step2.parquet (FAIL: outlier)",
+    "regime_v4_step2_v21.parquet (CONDITIONAL FAIL: rl<5)"
+  ]
+}
