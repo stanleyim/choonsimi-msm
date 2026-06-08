@@ -1,0 +1,54 @@
+{
+  "version": "v4_STEP6_TEMPORAL_VALIDATION",
+  "train_range": [
+    "2017-01-02",
+    "2024-12-30"
+  ],
+  "test_range": [
+    "2025-01-02",
+    "2026-06-05"
+  ],
+  "train_n": 1964,
+  "test_n": 345,
+  "features": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6",
+    "M7",
+    "M8",
+    "M9",
+    "M10",
+    "M11",
+    "M15",
+    "M16",
+    "M17",
+    "M18",
+    "M19",
+    "M17_missing",
+    "M19_missing",
+    "M16_expiry_flag"
+  ],
+  "train_cluster_dist": {
+    "0": 0.6021751574127076,
+    "1": 0.2993703491700057,
+    "2": 0.09845449341728678
+  },
+  "test_cluster_dist": {
+    "0": 0.2603550295857988,
+    "1": 0.363905325443787,
+    "2": 0.3757396449704142
+  },
+  "train_R1_count": 523,
+  "test_R1_count": 123,
+  "label_map_oos_to_v21": {
+    "1": 0,
+    "3": 1,
+    "2": 2
+  },
+  "case": "CASE 2: VALID (R1 in both)",
+  "v21_vs_oos_train_agreement": 0.024439918533604887,
+  "created_ts": 1780957953.5344853
+}
