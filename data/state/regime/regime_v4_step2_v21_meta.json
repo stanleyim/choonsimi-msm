@@ -1,0 +1,91 @@
+{
+  "version": "v4_STEP2_v21",
+  "method": "KMeans",
+  "k": 4,
+  "random_state": 42,
+  "n_init": 10,
+  "inertia": 19786.740535948065,
+  "silhouette": 0.10865782951252559,
+  "features": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6",
+    "M7",
+    "M8",
+    "M9",
+    "M10",
+    "M11",
+    "M15",
+    "M16",
+    "M17",
+    "M18",
+    "M19",
+    "M17_missing",
+    "M19_missing",
+    "M16_expiry_flag"
+  ],
+  "transform": {
+    "log_sign": [
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9",
+      "M10",
+      "M11",
+      "M16",
+      "M17",
+      "M18",
+      "M19"
+    ],
+    "winsorize": {
+      "M16": [
+        -7.232228659266687,
+        2.5319439871966334
+      ],
+      "clipped_count": 48
+    }
+  },
+  "nan_handling": "median_fill (axes only)",
+  "medians": {
+    "M1": 17.59,
+    "M2": -0.24,
+    "M3": 2.313,
+    "M4": 5.402,
+    "M5": -17128.0,
+    "M6": 1709.0,
+    "M7": -5866.0,
+    "M8": -6014.0,
+    "M9": -15690.0,
+    "M10": 13532.0,
+    "M11": 36360.0,
+    "M15": 0.35000000000002274,
+    "M16": -2.730000000000018,
+    "M17": 0.04999999999999716,
+    "M18": 0.9733562516863132,
+    "M19": 0.9687581699346406
+  },
+  "scaling": "RobustScaler (after transform)",
+  "base_axis_file": "data/state/axis_raw/axis_raw_v20.parquet",
+  "base_head": "4a14ac0",
+  "cluster_sizes": {
+    "0": 1184,
+    "1": 77,
+    "2": 800,
+    "3": 248
+  },
+  "cluster_pct": {
+    "0": 0.5128,
+    "1": 0.0333,
+    "2": 0.3465,
+    "3": 0.1074
+  },
+  "run_length_mean": 3.3270893371757926,
+  "run_length_median": 1.0,
+  "transition_diag_mean": 0.6557499999999999,
+  "created_ts": 1780956534.109914,
+  "previous_attempt": "regime_v4_step2.parquet (FAIL: 97% R=0)"
+}
