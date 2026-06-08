@@ -1,0 +1,106 @@
+{
+  "version": "v4_STEP5",
+  "r1_distribution": {
+    "valid": false,
+    "years_present": 1,
+    "total_years": 10,
+    "coverage": 0.1,
+    "max_cluster": 65,
+    "mean_cluster": 19.25,
+    "year_dist": {
+      "2026": 77
+    }
+  },
+  "omega": [
+    {
+      "asset": "KOSPI",
+      "regime": 2,
+      "hold": 3,
+      "ret_col": "r_kospi_1d"
+    },
+    {
+      "asset": "KOSDAQ150",
+      "regime": 3,
+      "hold": 1,
+      "ret_col": "r_kq150_1d"
+    }
+  ],
+  "hold_map": {
+    "0": 5,
+    "1": 6,
+    "2": 3,
+    "3": 1
+  },
+  "results": {
+    "KOSPI R2 hold3d": {
+      "n_days": 2308,
+      "exposure": 0.5392,
+      "CAGR_%": 5.9325,
+      "Sharpe": 0.5098,
+      "Sharpe_active": 0.6943,
+      "MDD_%": -42.6177,
+      "Win_%": 29.2461,
+      "final_NAV": 1.6953
+    },
+    "KQ150 R3 hold1d": {
+      "n_days": 2308,
+      "exposure": 0.1074,
+      "CAGR_%": 10.0975,
+      "Sharpe": 0.7365,
+      "Sharpe_active": 2.2631,
+      "MDD_%": -29.7215,
+      "Win_%": 6.4558,
+      "final_NAV": 2.4134
+    },
+    "KOSPI combined": {
+      "n_days": 2308,
+      "exposure": 0.5392,
+      "CAGR_%": 5.9325,
+      "Sharpe": 0.5098,
+      "Sharpe_active": 0.6943,
+      "MDD_%": -42.6177,
+      "Win_%": 29.2461,
+      "final_NAV": 1.6953
+    },
+    "Combined 0.5/0.5": {
+      "n_days": 2308,
+      "exposure": 0.3233,
+      "CAGR_%": 8.3819,
+      "Sharpe": 0.7981,
+      "Sharpe_active": 1.0408,
+      "MDD_%": -24.8003,
+      "Win_%": 32.3224,
+      "final_NAV": 2.0901
+    },
+    "B&H KOSPI": {
+      "n_days": 2308,
+      "exposure": 1.0,
+      "CAGR_%": 16.4293,
+      "Sharpe": 0.829,
+      "Sharpe_active": 0.8291,
+      "MDD_%": -43.8979,
+      "Win_%": 54.8527,
+      "final_NAV": 4.0276
+    },
+    "B&H KOSDAQ150": {
+      "n_days": 2308,
+      "exposure": 1.0,
+      "CAGR_%": 7.2305,
+      "Sharpe": 0.3819,
+      "Sharpe_active": 0.382,
+      "MDD_%": -59.0814,
+      "Win_%": 52.0797,
+      "final_NAV": 1.8953
+    }
+  },
+  "v12_comparison": {
+    "v12_cagr": 16.48,
+    "v12_sharpe": 0.686,
+    "v12_mdd": -33.13,
+    "msm_best_label": "Combined 0.5/0.5",
+    "msm_best_cagr": 8.381857792511083,
+    "msm_best_sharpe": 0.7980740598736046,
+    "msm_best_mdd": -24.80029085837264
+  },
+  "created_ts": 1780957727.2134063
+}
